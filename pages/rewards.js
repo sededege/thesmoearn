@@ -1,21 +1,9 @@
 import React, { useEffect } from "react";
-import styles from "../styles/User.module.css";
 import { useRouter } from "next/router";
-import Image from "next/image";
-import allAccess from "../public/allAccess.jpeg";
 import { getSession } from "next-auth/react";
-import UserData from "../app/components/userData/userData";
-import LogoutBtn from "../app/components/logoutBtn/logoutBtn";
-import SecretBtn from "../app/components/secretBtn/secretBtn";
-import axios from "axios";
 import Layout from "../app/components/Layout";
-import Cardtweet from "../app/components/Cardtweet";
-import Cardnft from "../app/components/Cardnft";
-import Cardlisting from "../app/components/Cardlisting";
 import Cardreward from "../app/components/Cardreward";
-import { GiTwoCoins } from "react-icons/gi";
-import { AiOutlineTwitter } from "react-icons/ai";
-import Carddiscord from "../app/components/Carddiscord";
+
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);

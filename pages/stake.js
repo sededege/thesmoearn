@@ -1,14 +1,10 @@
-/* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable @next/next/no-img-element */
+
 import React, { useState, useCallback } from "react";
-import Countdown from "react-countdown";
 import { GiTwoCoins } from "react-icons/gi";
 import Layout from "../app/components/Layout";
-import axios from "axios";
 import { useRouter } from "next/router";
 import { getSession, useSession } from "next-auth/react";
-import { hashtest } from "./hashtest";
 import {
   saveUser,
   getAllUsuarios,
