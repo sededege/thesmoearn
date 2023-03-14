@@ -113,9 +113,9 @@ const staked = ({ userSession, test, userss, allusers }) => {
     
    console.log(session)
        
-   console.log(test)
+ /*   console.log(test)
     session && test === undefined && location.reload();
-
+ */
 
     setStaking(false);
 
