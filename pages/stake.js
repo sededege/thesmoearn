@@ -16,13 +16,12 @@ import { motion, animatePresence } from "framer-motion";
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-      const wallet = session && session.user.address;
- 
-/*  const wallet = "9W9544WeacCPGAFip7tuB9htw5SUrC6LRuNLaAfPspeK";
- */
-  if (session) {
-    const fetchnfts = async(num) => {
+  const wallet = session && session.user.address;
 
+  /*  const wallet = "9W9544WeacCPGAFip7tuB9htw5SUrC6LRuNLaAfPspeK";
+   */
+  if (session) {
+    const fetchnfts = async (num) => {
       const body = {
         method: "qn_fetchNFTs",
         params: {
@@ -31,29 +30,23 @@ export async function getServerSideProps(context) {
           perPage: 40,
         },
       };
-    
+
       const options = {
         method: "POST",
         body: JSON.stringify(body),
       };
       return await fetch(
-      "https://billowing-virulent-gas.solana-mainnet.discover.quiknode.pro/cd78f9ac76e21ebc9a89b54ff106a19bff9ebdb9/",
-      options
-    )
-      .then((res) => res.json())
-      .then((res) => {
-      return res.result.assets
-/*            .filter((b) => b.collectionAddress === "HNvbqajUp8tYYRRBwm4cqeRQRbahLLTSLdvgi6QzM4cB")
- */           .filter((b) => b.collectionName === "Blessed Dogs")
-          .map((a) => a)
-        
-
-      });
-
-
-
-    
-    }
+        "https://billowing-virulent-gas.solana-mainnet.discover.quiknode.pro/cd78f9ac76e21ebc9a89b54ff106a19bff9ebdb9/",
+        options
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          return res.result.assets
+            /*            .filter((b) => b.collectionAddress === "HNvbqajUp8tYYRRBwm4cqeRQRbahLLTSLdvgi6QzM4cB")
+             */ .filter((b) => b.collectionName === "Blessed Dogs")
+            .map((a) => a);
+        });
+    };
     const checkuser = async (a) => {
       const res = await getUser(a);
       if (res) {
@@ -72,11 +65,15 @@ export async function getServerSideProps(context) {
         return await getUser();
       }
     };
-let array = []
+    let array = [];
     return {
       props: {
         userSession: session && session.user.address,
-        test: [].concat(await fetchnfts(1)/* , await fetchnfts(2),await fetchnfts(3),await fetchnfts(4) */),
+        test: [].concat(
+          await fetchnfts(
+            1
+          ) /* , await fetchnfts(2),await fetchnfts(3),await fetchnfts(4) */
+        ),
         userss: await checkuser(session.user.address),
         allusers: await getAllUsuarios(),
       },
@@ -90,14 +87,14 @@ let array = []
   }
 }
 
-const staked = ({ userSession,  userss, allusers }) => {
-  
+const staked = ({ userSession, userss, allusers }) => {
   const [staking, setStaking] = useState(false);
   const [nfts, setNfts] = useState([]);
+  const [nfts2, setNfts2] = useState(nfts);
 
   const [filtered, setFiltered] = useState([]);
   const [users, setUsers] = useState([]);
-  const [stake, setStake] = useState(userss);
+  const [stake, setStake] = useState([]);
   const [select, setSelect] = useState([]);
   const [select2, setSelect2] = useState([]);
   const [confirm, setConfirm] = useState(false);
@@ -109,57 +106,85 @@ const staked = ({ userSession,  userss, allusers }) => {
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  const fetchnfts = async(num) => {
-
+  const fetchnfts = async (num) => {
     const body = {
       method: "qn_fetchNFTs",
       params: {
-        wallet: session && session.user.address,
-        page: num,
+        wallet: "9W9544WeacCPGAFip7tuB9htw5SUrC6LRuNLaAfPspeK",
+
+        /*         wallet: session && session.user.address,
+         */ page: num,
         perPage: 40,
       },
     };
-  
+
     const options = {
       method: "POST",
       body: JSON.stringify(body),
     };
     return await fetch(
-    "https://billowing-virulent-gas.solana-mainnet.discover.quiknode.pro/cd78f9ac76e21ebc9a89b54ff106a19bff9ebdb9/",
-    options
-  )
-    .then((res) => res.json())
-    .then((res) => {
-    return res && res.result && res.result.assets
-/*            .filter((b) => b.collectionAddress === "HNvbqajUp8tYYRRBwm4cqeRQRbahLLTSLdvgi6QzM4cB")
-*/           .filter((b) => b.collectionName === "Blessed Dogs")
-        .map((a) => a)
-      
-    });
+      "https://billowing-virulent-gas.solana-mainnet.discover.quiknode.pro/cd78f9ac76e21ebc9a89b54ff106a19bff9ebdb9/",
+      options
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        return (
+          res &&
+          res.result &&
+          res.result.assets
+            .filter(
+              (b) =>
+                b.collectionAddress ===
+                "HNvbqajUp8tYYRRBwm4cqeRQRbahLLTSLdvgi6QzM4cB"
+            )
+            /*            .filter((b) => b.collectionName === "Blessed Dogs")
+             */ .map((a) => a)
+        );
+      });
+  };
 
-  
-  }
+  const checkuser = async (a) => {
+    const res = await getUser(a);
+    if (res) {
+      return res;
+    } else {
+      const dataa = {
+        id: session && session.user.address,
+        snapshot: `${Date.now()}`,
+        nickname: "test",
+        points: 0,
+        twitter: null,
+        discord: null,
+        staked: [],
+      };
+      saveUser(dataa);
+      return await getUser();
+    }
+  };
 
   React.useEffect(() => {
-    
-   console.log(session)
-/*    console.log(test)
- */   
+   
 
-const asd = async() => {
-  setNfts(await fetchnfts(1))
-}
+    const asd = async () => {  
+      session && setStake(await checkuser(session.user.address));
+      const test = await [].concat(
+        await fetchnfts(1),
+        await fetchnfts(2),
+        await fetchnfts(3),
+        await fetchnfts(4)
+      );
+      setNfts(test);
+      setNfts2(test);
+    };
 
-asd()
+    nfts && nfts.length === 0 && asd();
 
-
-
-console.log(nfts)
-/*     session && test === undefined && location.reload();
+    console.log(nfts)
+   
+    /*     session && test === undefined && location.reload();
 
  */
     setStaking(false);
-
   }, [session]);
 
   const dataa = {
@@ -176,9 +201,7 @@ console.log(nfts)
       const tostake = filtrar(stake.staked).map((a) => ({
         ...a,
         snapshot: `${Date.now()}`,
-        points:  a.name.slice(0, 4) === "Ruby"
-        ? 3 * qtyxhr
-        : qtyxhr,
+        points: a.name.slice(0, 4) === "Ruby" ? 3 * qtyxhr : qtyxhr,
         blocknumber: a.provenance[0].blockNumber,
       }));
 
@@ -188,19 +211,17 @@ console.log(nfts)
       };
       updateNfts(dataa);
       setNfts([]);
-      setStake({staked:tostake.concat(stake.staked)})
-
+      setStake({ staked: tostake.concat(stake.staked) });
     } else if (a === "unstakeall") {
       stake && stake.staked.map((e) => setNfts((prev) => [...prev, e]));
-     /*  setStake([]); */
+      /*  setStake([]); */
       const dataa = {
         id: session && session.user.address,
         staked: [],
       };
       updateNfts(dataa);
-      setStake({staked:[]})
-
-    }/*  else if (a === "unstake") {
+      setStake({ staked: [] });
+    } /*  else if (a === "unstake") {
       select2.map((e) => setNfts((prev) => [...prev, e]));
 
       setStake(stake.filter((el) => !select2.includes(el)));
@@ -211,23 +232,19 @@ console.log(nfts)
         points: qtyxhr,
         blocknumber: a.provenance[0].blockNumber,
       }));
-    }  */
-    else if (a === "claimall") {
+    }  */ else if (a === "claimall") {
       let result = [];
 
-     nfts.forEach((e) =>
+      nfts2.forEach((e) =>
         stake.staked.find((f) => f.tokenAddress === e.tokenAddress)
           ? result.push(e)
           : null
       );
 
-      
       const tostake2 = result.map((a) => ({
         ...a,
         snapshot: `${Date.now()}`,
-        points:  a.name.slice(0, 4) === "Ruby"
-        ? 3 * qtyxhr
-        : qtyxhr,
+        points: a.name.slice(0, 4) === "Ruby" ? 3 * qtyxhr : qtyxhr,
         blocknumber: a.provenance[0].blockNumber,
       }));
 
@@ -242,25 +259,21 @@ console.log(nfts)
       };
       updateNfts(data2);
       updatePoints(datapoints);
-
     } else {
       setNfts(nfts.filter((el) => !select.includes(el)));
       const tostake = select.map((a) => ({
         ...a,
         snapshot: `${Date.now()}`,
-        points:  a.name.slice(0, 4) === "Ruby"
-        ? 3 * qtyxhr
-        : qtyxhr,
+        points: a.name.slice(0, 4) === "Ruby" ? 3 * qtyxhr : qtyxhr,
         blocknumber: a.provenance[0].blockNumber,
       }));
-
 
       const dataa = {
         id: session && session.user.address,
         staked: tostake.concat(stake.staked),
       };
       updateNfts(dataa);
-      setStake({staked:tostake.concat(stake.staked)})
+      setStake({ staked: tostake.concat(stake.staked) });
     }
     /* setStaking(true); */
     setSelect([]);
@@ -287,9 +300,10 @@ console.log(nfts)
     let result = [];
 
     // Find unique elements in arr1 & push them into result
-    b && nfts.forEach((e) =>
-      b.find((f) => f.tokenAddress === e.tokenAddress) ? null : result.push(e)
-    );
+    b &&
+      nfts2.forEach((e) =>
+        b.find((f) => f.tokenAddress === e.tokenAddress) ? null : result.push(e)
+      );
     // Find unique elements in arr2 & push them into result
     /*  arr2.forEach((e) => (arr1.find((f) => f === e) ? null : result.push(e))); */
 
@@ -341,9 +355,11 @@ console.log(nfts)
   const updatestake = (a) => {
     let result = [];
 
+  
+
     a &&
       a.forEach((e) =>
-      nfts.find((f) => f.tokenAddress === e.tokenAddress)
+        nfts2.find((f) => f.tokenAddress === e.tokenAddress)
           ? result.push(e)
           : null
       );
@@ -354,7 +370,6 @@ console.log(nfts)
     totalstaked = totalstaked + a;
   };
 
-  
   return (
     <Layout>
       {nfts ? (
@@ -422,7 +437,9 @@ console.log(nfts)
                      */}{" "}
                     {/*                     nfts.filter(a => a.tokenAddress !== '2FWVhyTS3vQJUmqT6QJCGzf599batbLTf24mSpWZCf36')
                      */}{" "}
-                    {userss && stake && nfts &&
+                    {userss &&
+                      stake &&
+                      nfts &&
                       filtrar(stake.staked).map((a, index) => (
                         <motion.div
                           key={index}
@@ -492,7 +509,7 @@ console.log(nfts)
               <div className="flex flex-col w-full ">
                 <div className="flex justify-between p-6 mb-4 shadow-slate-700 shadow-lg rounded-lg items-center">
                   <h1 className=" text-[1.6rem] text-slate-300 font">
-                    Locked: {userss && updatestake(stake.staked).length}
+                    Locked: {updatestake(stake.staked).length}
                   </h1>
 
                   <div className="flex-col flex">
@@ -502,10 +519,9 @@ console.log(nfts)
                     <div className="flex  items-center gap-2">
                       <GiTwoCoins className="text-purple-400 font text-[1.4rem]" />
                       <p className="text-purple-400 font text-[1.4rem]">
-                        {userss &&
-                          updatestake(stake.staked).map((a) =>
-                            pointsearn(a.snapshot)
-                          )}
+                        {updatestake(stake.staked).map((a) =>
+                          pointsearn(a.snapshot)
+                        )}
                         {puntoss}
                       </p>
                     </div>
@@ -519,47 +535,46 @@ console.log(nfts)
                 </div>
                 <div className="shadow-lg relative shadow-slate-700 p-4  rounded-lg w-full h-[400px]">
                   <div className=" grid grid-cols-5 h-[300px] overflow-auto gap-2">
-                    {userss && 
-                      updatestake(stake.staked).map((a, index) => (
-                        <motion.div
-                          key={index}
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{
-                            ease: "easeOut",
-                            duration: 0.5,
-                            delay: 0.3 + index / 5,
-                          }}
-                          onClick={() => addToUnStake(a)}
-                          className={`${
-                            select2.includes(a)
-                              ? "bg-tesmo2 border-2 border-slate-400"
-                              : "bg-tesmo"
-                          }  mx-auto hover:border-2 transition-all 2s ease-in border-2 cursor-pointer hover:border-tesmo2 hover:bg-tesmo2 border-tesmo p-2 h-[185px] rounded-lg`}
-                        >
-                          <img
-                            className="w-[100px] object-contain mx-auto rounded-lg"
-                            src={a.imageUrl}
-                            alt="nft"
-                          />
-                          <p className="text-white text-center text-[0.9rem] mt-2">
-                            {a.name}
-                          </p>
-                          <div className="text-center text-yellow-300 font-bold flex justify-center  items-center gap-2 ">
-                            <GiTwoCoins /> {points(a.snapshot, index)}
-                          </div>
-                          {/* <div></div> */}
+                    {updatestake(stake.staked).map((a, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{
+                          ease: "easeOut",
+                          duration: 0.5,
+                          delay: 0.3 + index / 5,
+                        }}
+                        onClick={() => addToUnStake(a)}
+                        className={`${
+                          select2.includes(a)
+                            ? "bg-tesmo2 border-2 border-slate-400"
+                            : "bg-tesmo"
+                        }  mx-auto hover:border-2 transition-all 2s ease-in border-2 cursor-pointer hover:border-tesmo2 hover:bg-tesmo2 border-tesmo p-2 h-[185px] rounded-lg`}
+                      >
+                        <img
+                          className="w-[100px] object-contain mx-auto rounded-lg"
+                          src={a.imageUrl}
+                          alt="nft"
+                        />
+                        <p className="text-white text-center text-[0.9rem] mt-2">
+                          {a.name}
+                        </p>
+                        <div className="text-center text-yellow-300 font-bold flex justify-center  items-center gap-2 ">
+                          <GiTwoCoins /> {points(a.snapshot, index)}
+                        </div>
+                        {/* <div></div> */}
 
-                          {/*   <Countdown
+                        {/*   <Countdown
                                       className="text-white justify-center flex "
                                       date={Date.now() + 86399000}
                                   /> */}
-                          {/*  <Countdown
+                        {/*  <Countdown
                 className="text-white "
                 date={parseInt(a.snapshot) + 864000}
               /> */}
-                        </motion.div>
-                      ))}
+                      </motion.div>
+                    ))}
                   </div>
                   <div className="flex justify-between p-4 mt-4 bg-tesmo2 shadow-slate-700 border-2 border-slate-700 rounded-lg items-center absolute bottom-0 left-0 w-full">
                     <div className="flex items-center">
