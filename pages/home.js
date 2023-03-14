@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
 import axios from "axios";
 import Layout from "../app/components/Layout";
-import { hashlist } from "./Hashlist";
+import { hashlist } from "../app/components/Hashlist";
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);

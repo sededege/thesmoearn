@@ -4,7 +4,7 @@ import { signIn, useSession } from "next-auth/react";
 import Layout from "../Layout";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { hashlist } from "../../../pages/Hashlist";
+import { hashlist } from "../Hashlist";
 import LogoutBtn from "../logoutBtn/logoutBtn";
 import Image from "next/image";
 
