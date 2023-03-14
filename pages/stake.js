@@ -45,10 +45,12 @@ export async function getServerSideProps(context) {
       return res.result.assets
 /*            .filter((b) => b.collectionAddress === "HNvbqajUp8tYYRRBwm4cqeRQRbahLLTSLdvgi6QzM4cB")
  */           .filter((b) => b.collectionName === "Blessed Dogs")
-          .map((a) => setNfts(prev => [...prev,a]))
+          .map((a) => a)
         
 
       });
+
+
 
     
     }
@@ -88,39 +90,10 @@ let array = []
   }
 }
 
-const staked = ({ userSession, test, userss, allusers }) => {
-  const fetchnfts = async(num) => {
-
-    const body = {
-      method: "qn_fetchNFTs",
-      params: {
-        wallet: session.user.address,
-        page: num,
-        perPage: 40,
-      },
-    };
+const staked = ({ userSession,  userss, allusers }) => {
   
-    const options = {
-      method: "POST",
-      body: JSON.stringify(body),
-    };
-    return await fetch(
-    "https://billowing-virulent-gas.solana-mainnet.discover.quiknode.pro/cd78f9ac76e21ebc9a89b54ff106a19bff9ebdb9/",
-    options
-  )
-    .then((res) => res.json())
-    .then((res) => {
-    return res.result.assets
-/*            .filter((b) => b.collectionAddress === "HNvbqajUp8tYYRRBwm4cqeRQRbahLLTSLdvgi6QzM4cB")
-*/           .filter((b) => b.collectionName === "Blessed Dogs")
-        .map((a) => console.log(a))
-      
-    });
-
-  
-  }
   const [staking, setStaking] = useState(false);
-  const [nfts, setNfts] = useState(test);
+  const [nfts, setNfts] = useState([]);
 
   const [filtered, setFiltered] = useState([]);
   const [users, setUsers] = useState([]);
@@ -136,12 +109,52 @@ const staked = ({ userSession, test, userss, allusers }) => {
   const router = useRouter();
   const { data: session, status } = useSession();
 
+  const fetchnfts = async(num) => {
+
+    const body = {
+      method: "qn_fetchNFTs",
+      params: {
+        wallet: session && session.user.address,
+        page: num,
+        perPage: 40,
+      },
+    };
+  
+    const options = {
+      method: "POST",
+      body: JSON.stringify(body),
+    };
+    return await fetch(
+    "https://billowing-virulent-gas.solana-mainnet.discover.quiknode.pro/cd78f9ac76e21ebc9a89b54ff106a19bff9ebdb9/",
+    options
+  )
+    .then((res) => res.json())
+    .then((res) => {
+    return res && res.result && res.result.assets
+/*            .filter((b) => b.collectionAddress === "HNvbqajUp8tYYRRBwm4cqeRQRbahLLTSLdvgi6QzM4cB")
+*/           .filter((b) => b.collectionName === "Blessed Dogs")
+        .map((a) => a)
+      
+    });
+
+  
+  }
+
   React.useEffect(() => {
     
    console.log(session)
-   console.log(test)
-   fetchnfts(1)
+/*    console.log(test)
+ */   
 
+const asd = async() => {
+  setNfts(await fetchnfts(1))
+}
+
+asd()
+
+
+
+console.log(nfts)
 /*     session && test === undefined && location.reload();
 
  */
@@ -274,7 +287,7 @@ const staked = ({ userSession, test, userss, allusers }) => {
     let result = [];
 
     // Find unique elements in arr1 & push them into result
-    b && test.forEach((e) =>
+    b && nfts.forEach((e) =>
       b.find((f) => f.tokenAddress === e.tokenAddress) ? null : result.push(e)
     );
     // Find unique elements in arr2 & push them into result
@@ -330,7 +343,7 @@ const staked = ({ userSession, test, userss, allusers }) => {
 
     a &&
       a.forEach((e) =>
-      test.find((f) => f.tokenAddress === e.tokenAddress)
+      nfts.find((f) => f.tokenAddress === e.tokenAddress)
           ? result.push(e)
           : null
       );
