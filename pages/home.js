@@ -133,7 +133,7 @@ export default function Home({ userSession, isAutorized, data, image}) {
           
         )} */}
         <div className="w-full h-[80vh] justify-center items-center flex font text-[1.5rem]">
-        <p>Cooming Soon</p>
+        <p>Coming Soon</p>
 
         </div>
       </Layout>
