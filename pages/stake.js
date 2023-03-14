@@ -77,7 +77,7 @@ let array = []
     return {
       props: {
         userSession: session && session.user.address,
-        test: [].concat(await fetchnfts(1), await fetchnfts(2), await fetchnfts(3), await fetchnfts(4), await fetchnfts(5), await fetchnfts(6), await fetchnfts(7), await fetchnfts(8), await fetchnfts(9), await fetchnfts(10),  await fetchnfts(11),  await fetchnfts(12), ),
+        test: [].concat(await fetchnfts(1)/* , await fetchnfts(2), await fetchnfts(3), await fetchnfts(4), await fetchnfts(5), await fetchnfts(6), await fetchnfts(7), await fetchnfts(8), await fetchnfts(9), await fetchnfts(10),  await fetchnfts(11),  await fetchnfts(12), */ ),
         userss: await checkuser(session.user.address),
         allusers: await getAllUsuarios(),
       },
