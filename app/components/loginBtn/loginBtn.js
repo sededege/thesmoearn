@@ -1,7 +1,5 @@
 import React from "react";
-import { Button } from "@web3uikit/core";
 import { signIn, useSession } from "next-auth/react";
-import Layout from "../Layout";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { hashlist } from "../Hashlist";
@@ -34,7 +32,7 @@ export default function LoginBtn() {
         network: "mainnet",
       };
 
-      const result = await axios.post(`${url}/api/solanaAPI/getNFTs`, options, {
+      const result = await axios.post(`https://thesmoearn.vercel.app/api/solanaAPI/getNFTs`, options, {
         headers: {
           "content-type": "application/json",
         },
