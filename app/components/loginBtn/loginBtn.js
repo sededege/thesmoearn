@@ -26,7 +26,7 @@ export default function LoginBtn() {
     const encodedMessage = new TextEncoder().encode(message);
     const signedMessage = await provider.signMessage(encodedMessage, "utf8");
     const signature = await isHolder();
-
+    let url = "https://thesmoearn.vercel.app";
     async function isHolder() {
       let data = [];
       const options = {
@@ -34,15 +34,11 @@ export default function LoginBtn() {
         network: "mainnet",
       };
 
-      const result = await axios.post(
-        "http://localhost:3000/api/solanaAPI/getNFTs",
-        options,
-        {
-          headers: {
-            "content-type": "application/json",
-          },
-        }
-      );
+      const result = await axios.post(`${url}/api/solanaAPI/getNFTs`, options, {
+        headers: {
+          "content-type": "application/json",
+        },
+      });
       if (result.data.length > 0) {
         for (let item of result.data) {
           data.push(item.mint);
@@ -77,13 +73,7 @@ export default function LoginBtn() {
 
   return (
     <div className="w-screen h-[90vh] items-center flex justify-center flex-col gap">
-      <Image
-        src="/img/logo.jpg"
-        alt="logo"
-        width={200}
-        height={200}
-      
-      />
+      <Image src="/img/logo.jpg" alt="logo" width={200} height={200} />
       <h1 className="font w-[300px] text-center ">
         You need at the least 1 nft to enter on Valhalla.
       </h1>
