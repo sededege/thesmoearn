@@ -24,24 +24,21 @@ export default function LoginBtn() {
     const message = "Welcome to Valhalla";
     const encodedMessage = new TextEncoder().encode(message);
     const signedMessage = await provider.signMessage(encodedMessage, "utf8");
-    const signature = 'false' /* await isHolder() */;
+    const signature = await isHolder();
     let url = "https://thesmoearn.vercel.app";
     async function isHolder() {
       let data = [];
       const options = {
         address: address,
         network: "mainnet",
-        method: 'POST'
       };
 
-      const result = await fetch(`https://thesmoearn.vercel.app/api/solanaAPI/getNFTs`, options, {
+      const result = await axios.post(`http://localhost:3000/api/solanaAPI/getNFTs`, options, {
         headers: {
           "content-type": "application/json",
         },
-      })
-
-      console.log(await result.then(res =>res.json()))
-      /*  if (result.data.length > 0) {
+      });
+      if (result.data.length > 0) {
         for (let item of result.data) {
           data.push(item.mint);
         }
@@ -50,11 +47,12 @@ export default function LoginBtn() {
       if (data.length > 0) {
         const existe = hashlist.filter((el) => data.includes(el));
         if (existe && existe.length > 0) {
+          /* return 'true' */
           return true;
         } else {
           return false;
         }
-      }  */
+      }
     }
 
     try {

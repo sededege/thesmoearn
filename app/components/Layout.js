@@ -15,6 +15,7 @@ React.useEffect(() => {
 }, [])
 
   return (
+    
     <>
       {session && session.user && session.user.signature === 'false' ? (
         <>

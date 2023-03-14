@@ -16,10 +16,10 @@ import { motion, animatePresence } from "framer-motion";
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-/*       const wallet = session && session.user.address;
- */ 
- const wallet = "9W9544WeacCPGAFip7tuB9htw5SUrC6LRuNLaAfPspeK";
-
+      const wallet = session && session.user.address;
+ 
+/*  const wallet = "9W9544WeacCPGAFip7tuB9htw5SUrC6LRuNLaAfPspeK";
+ */
   if (session) {
     
 
@@ -47,8 +47,8 @@ export async function getServerSideProps(context) {
       .then((res) => res.json())
       .then((res) => {
       return res.result.assets
-/*           .filter((b) => b.collectionAddress === "HNvbqajUp8tYYRRBwm4cqeRQRbahLLTSLdvgi6QzM4cB")
- */          .filter((b) => b.collectionName === "Blessed Dogs")
+/*            .filter((b) => b.collectionAddress === "HNvbqajUp8tYYRRBwm4cqeRQRbahLLTSLdvgi6QzM4cB")
+ */           .filter((b) => b.collectionName === "Blessed Dogs")
           .map((a) => a)
         
       });
@@ -104,7 +104,7 @@ const staked = ({ userSession, test, userss, allusers }) => {
   const [deleted, setDeleted] = useState([]);
   const [puntos, setPuntos] = useState([]);
   const data = [];
-  let qtyxhr = 12;
+  let qtyxhr = 10;
   let supply = 100;
   const router = useRouter();
   const { data: session, status } = useSession();
@@ -136,7 +136,7 @@ const staked = ({ userSession, test, userss, allusers }) => {
         ...a,
         snapshot: `${Date.now()}`,
         points:  a.name.slice(0, 4) === "Ruby"
-        ? 2 * qtyxhr
+        ? 3 * qtyxhr
         : qtyxhr,
         blocknumber: a.provenance[0].blockNumber,
       }));
@@ -184,7 +184,7 @@ const staked = ({ userSession, test, userss, allusers }) => {
         ...a,
         snapshot: `${Date.now()}`,
         points:  a.name.slice(0, 4) === "Ruby"
-        ? 2 * qtyxhr
+        ? 3 * qtyxhr
         : qtyxhr,
         blocknumber: a.provenance[0].blockNumber,
       }));
@@ -207,7 +207,7 @@ const staked = ({ userSession, test, userss, allusers }) => {
         ...a,
         snapshot: `${Date.now()}`,
         points:  a.name.slice(0, 4) === "Ruby"
-        ? 2 * qtyxhr
+        ? 3 * qtyxhr
         : qtyxhr,
         blocknumber: a.provenance[0].blockNumber,
       }));
@@ -409,7 +409,7 @@ const staked = ({ userSession, test, userss, allusers }) => {
                           <div className="text-center text-yellow-300 font-bold flex justify-center  items-center gap-2 ">
                             <GiTwoCoins />{" "}
                             {a.name.slice(0, 4) === "Ruby"
-                              ? 2 * qtyxhr
+                              ? 3 * qtyxhr
                               : qtyxhr}
                           </div>
                         </motion.div>
@@ -472,7 +472,7 @@ const staked = ({ userSession, test, userss, allusers }) => {
                     onClick={() => sendtostake("claimall")}
                     className="text-white px-8 py-2 rounded-lg border-2 border-slate-700 hover:bg-white hover:text-slate-700 bg-slate-700 cursor-pointer font text-[1.4rem]"
                   >
-                    Claim
+                    Claim all
                   </button>
                 </div>
                 <div className="shadow-lg relative shadow-slate-700 p-4  rounded-lg w-full h-[400px]">
