@@ -45,8 +45,9 @@ export async function getServerSideProps(context) {
       return res.result.assets
 /*            .filter((b) => b.collectionAddress === "HNvbqajUp8tYYRRBwm4cqeRQRbahLLTSLdvgi6QzM4cB")
  */           .filter((b) => b.collectionName === "Blessed Dogs")
-          .map((a) => a)
+          .map((a) => setNfts(prev => [...prev,a]))
         
+
       });
 
     
