@@ -32,7 +32,7 @@ export default function LoginBtn() {
         network: "mainnet",
       };
 
-      const result = await axios.post(`https://thesmoearn.vercel.app/api/solanaAPI/getNFTs`, options, {
+      const result = await axios.post(`52.207.251.115:3000/api/solanaAPI/getNFTs`, options, {
         headers: {
           "content-type": "application/json",
         },

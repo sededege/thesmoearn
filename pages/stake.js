@@ -16,10 +16,10 @@ import { motion, animatePresence } from "framer-motion";
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-      const wallet = session && session.user.address;
- 
-/*  const wallet = "9W9544WeacCPGAFip7tuB9htw5SUrC6LRuNLaAfPspeK";
- */
+/*       const wallet = session && session.user.address;
+ */ 
+ const wallet = "9W9544WeacCPGAFip7tuB9htw5SUrC6LRuNLaAfPspeK";
+
   if (session) {
     
 
@@ -77,7 +77,7 @@ let array = []
     return {
       props: {
         userSession: session && session.user.address,
-        test: [].concat(await fetchnfts(1)/* , await fetchnfts(2), await fetchnfts(3), await fetchnfts(4), await fetchnfts(5), await fetchnfts(6), await fetchnfts(7), await fetchnfts(8), await fetchnfts(9), await fetchnfts(10),  await fetchnfts(11),  await fetchnfts(12), */ ),
+        test: [].concat(await fetchnfts(1), await fetchnfts(2),await fetchnfts(3),await fetchnfts(4)),
         userss: await checkuser(session.user.address),
         allusers: await getAllUsuarios(),
       },
@@ -110,28 +110,16 @@ const staked = ({ userSession, test, userss, allusers }) => {
   const { data: session, status } = useSession();
 
   React.useEffect(() => {
-    /*     !session && router.push("/");
-     */
-    /*  imgUrl(1);
-    imgUrl(2);
-    imgUrl(3);
-    imgUrl(4);
-    imgUrl(5);
-    imgUrl(6);
-    imgUrl(7);
-    imgUrl(8);
-    imgUrl(9);
-    imgUrl(10); */
-    /*  console.log(session);
-    console.log(userSession); */
-    console.log(session)
-    session &&
-      session.user &&
-      session.user.signature === "false" &&
-      router.push("/stake");
+    
+   console.log(session)
+       
+   console.log(test)
+    session && test === undefined && location.reload();
+
 
     setStaking(false);
-  }, [session, test]);
+
+  }, [session]);
 
   const dataa = {
     id: session && session.user.address,
