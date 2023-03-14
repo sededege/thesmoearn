@@ -21,10 +21,6 @@ export async function getServerSideProps(context) {
 /*  const wallet = "9W9544WeacCPGAFip7tuB9htw5SUrC6LRuNLaAfPspeK";
  */
   if (session) {
-    
-
-   
-
     const fetchnfts = async(num) => {
 
       const body = {
@@ -114,9 +110,9 @@ const staked = ({ userSession, test, userss, allusers }) => {
    console.log(session)
    console.log(test)
 
-    session && test === undefined && location.reload();
+/*     session && test === undefined && location.reload();
 
-
+ */
     setStaking(false);
 
   }, [session]);
@@ -170,7 +166,8 @@ const staked = ({ userSession, test, userss, allusers }) => {
         points: qtyxhr,
         blocknumber: a.provenance[0].blockNumber,
       }));
-    }  */else if (a === "claimall") {
+    }  */
+    else if (a === "claimall") {
       let result = [];
 
      nfts.forEach((e) =>
