@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
-import styles from "../styles/Home.module.css";
 import { useRouter } from "next/router";
-import { Typography } from "@web3uikit/core";
 import { useSession } from "next-auth/react";
 import LoginBtn from "../app/components/loginBtn/loginBtn";
 
@@ -10,16 +8,16 @@ export default function Home() {
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    session && status === "authenticated" && router.push("./user");
-  }, [session, status]);
+    session && status === "authenticated" && router.push("./home");
+  }, [session, status]); 
 
   return (
-    <div className={styles.body}>
-      <div className={styles.card}>
+    <div>
+      <div>
         {!session ? (
           <LoginBtn />
         ) : (
-          <Typography variant="caption14">Loading...</Typography>
+          <p >Loading...</p>
         )}
       </div>
     </div>

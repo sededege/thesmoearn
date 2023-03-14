@@ -3,6 +3,7 @@ import { Button } from "@web3uikit/core";
 
 export default function SecretBtn() {
   return (
+    <div>
     <Button
       text="Secret Button"
       theme="primary"
@@ -10,5 +11,6 @@ export default function SecretBtn() {
         alert("✨You have access to the secret button✨");
       }}
     ></Button>
+     </div>
   );
 }
