@@ -88,6 +88,36 @@ let array = []
 }
 
 const staked = ({ userSession, test, userss, allusers }) => {
+  const fetchnfts = async(num) => {
+
+    const body = {
+      method: "qn_fetchNFTs",
+      params: {
+        wallet: session.user.address,
+        page: num,
+        perPage: 40,
+      },
+    };
+  
+    const options = {
+      method: "POST",
+      body: JSON.stringify(body),
+    };
+    return await fetch(
+    "https://billowing-virulent-gas.solana-mainnet.discover.quiknode.pro/cd78f9ac76e21ebc9a89b54ff106a19bff9ebdb9/",
+    options
+  )
+    .then((res) => res.json())
+    .then((res) => {
+    return res.result.assets
+/*            .filter((b) => b.collectionAddress === "HNvbqajUp8tYYRRBwm4cqeRQRbahLLTSLdvgi6QzM4cB")
+*/           .filter((b) => b.collectionName === "Blessed Dogs")
+        .map((a) => console.log(a))
+      
+    });
+
+  
+  }
   const [staking, setStaking] = useState(false);
   const [nfts, setNfts] = useState(test);
 
@@ -109,6 +139,7 @@ const staked = ({ userSession, test, userss, allusers }) => {
     
    console.log(session)
    console.log(test)
+   fetchnfts(1)
 
 /*     session && test === undefined && location.reload();
 
