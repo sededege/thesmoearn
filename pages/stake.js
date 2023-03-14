@@ -77,7 +77,7 @@ let array = []
     return {
       props: {
         userSession: session && session.user.address,
-        test: [].concat(await fetchnfts(1), await fetchnfts(2),await fetchnfts(3),await fetchnfts(4)),
+        test: [].concat(await fetchnfts(1)/* , await fetchnfts(2),await fetchnfts(3),await fetchnfts(4) */),
         userss: await checkuser(session.user.address),
         allusers: await getAllUsuarios(),
       },
@@ -112,10 +112,10 @@ const staked = ({ userSession, test, userss, allusers }) => {
   React.useEffect(() => {
     
    console.log(session)
-       
- /*   console.log(test)
+   console.log(test)
+
     session && test === undefined && location.reload();
- */
+
 
     setStaking(false);
 
